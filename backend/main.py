@@ -40,7 +40,7 @@ def get_libri():
 
 
 @app.route("/api/libri", methods=["POST"])
-def post_libri():
+def post_nuovo_libro():
     nuovo_libro = request.get_json()
     nuovo_libro["id"] = max([libro["id"] for libro in data], default=0) + 1
     data.append(nuovo_libro)
