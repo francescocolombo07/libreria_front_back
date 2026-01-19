@@ -9,10 +9,9 @@ function App() {
   useEffect(() => {
     const fetchLibri = async () => {
       try {
-        setLoading(true)
         const response = await fetch('http://localhost:11000/api/libri')
         if (!response.ok) {
-          throw new Error('Errore nel caricamento dei dati')
+          throw new Error('Errore nel recupero dei libri')
         }
         const data = await response.json()
         setLibri(data)
@@ -29,27 +28,33 @@ function App() {
   }, [])
 
   return (
-    <div className="app-container">
-      <div className="sidebar">
+    <div className="container">
+      <header className="header">
         <h1>Libreria</h1>
-        {loading && <p className="loading">Caricamento...</p>}
-        {error && <p className="error">Errore: {error}</p>}
-        <div className="libri-list">
-          {libri.map((libro) => (
-            <div key={libro.id} className="libro-card">
-              <div className="card-header">
-                <h3 className="libro-titolo">{libro.titolo}</h3>
-              </div>
-              <div className="card-body">
-                <p><strong>ID:</strong> {libro.id}</p>
-                <p><strong>Autore:</strong> {libro.autore}</p>
-                <p><strong>Anno:</strong> {libro.anno}</p>
-                <p><strong>Genere:</strong> {libro.genere}</p>
-              </div>
+      </header>
+
+      {loading && <div className="loading">Caricamento...</div>}
+      {error && <div className="error">Errore: {error}</div>}
+
+      <div className="books-grid">
+        {libri.map((libro) => (
+          <div key={libro.id} className="book-card">
+            <div className="book-card-header">
+              <h2 className="book-title">{libro.titolo}</h2>
             </div>
-          ))}
-        </div>
+            <div className="book-card-body">
+              <p className="book-id"><strong>ID:</strong> {libro.id}</p>
+              <p className="book-author"><strong>Autore:</strong> {libro.autore}</p>
+              <p className="book-genre"><strong>Genere:</strong> {libro.genere}</p>
+              <p className="book-year"><strong>Anno:</strong> {libro.anno}</p>
+            </div>
+          </div>
+        ))}
       </div>
+
+      {!loading && libri.length === 0 && !error && (
+        <div className="no-books">Nessun libro trovato</div>
+      )}
     </div>
   )
 }
