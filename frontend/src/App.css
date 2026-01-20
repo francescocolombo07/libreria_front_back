@@ -1,121 +1,166 @@
-.container {
+html, body {
+  margin: 0;
+  padding: 0;
   width: 100%;
   min-height: 100vh;
   background-color: #ffffff;
-  padding: 20px;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Rimuove le freccette per Chrome, Safari, Edge e Opera */
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Rimuove le freccette per Firefox */
+.no-spinner {
+  -moz-appearance: textfield;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px; 
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
   border-bottom: 2px solid #000000;
+  width: 100%;
+  max-width: 1100px;
   padding-bottom: 20px;
 }
 
-.header h1 {
-  margin: 0;
-  font-size: 2.5em;
-  font-weight: 700;
-  color: #000000;
-  letter-spacing: 1px;
+.main-layout {
+  display: flex;
+  width: 100%;
+  max-width: 1100px; 
+  gap: 50px;
+  align-items: flex-start;
+  margin: 0 auto;
+}
+
+.books-section {
+  flex: 1;
+}
+
+.controls-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  position: sticky;
+  top: 40px; 
 }
 
 .books-grid {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-width: 600px;
-  margin: 0 auto;
 }
 
 .book-card {
   border: 1px solid #000000;
   background-color: #ffffff;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: all 0.3s ease;
-  display: flex;
-  flex-direction: column;
-}
-
-.book-card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  border-color: #333333;
 }
 
 .book-card-header {
-  background-color: #f0f0f0;
-  border-bottom: 1px solid #000000;
-  padding: 15px;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 12px 15px;
 }
 
 .book-title {
   margin: 0;
-  font-size: 1.3em;
-  font-weight: 600;
-  color: #000000;
-  line-height: 1.3;
+  font-size: 1.1em;
+  text-transform: uppercase;
 }
 
 .book-card-body {
   padding: 15px;
-  flex-grow: 1;
+  font-size: 0.9em;
+}
+
+.control-card {
+  border: 1px solid #000000;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+.control-card h3 {
+  margin-top: 0;
+  font-size: 1em;
+  margin-bottom: 20px;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.input-group {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  margin-bottom: 12px;
   gap: 10px;
 }
 
-.book-author,
-.book-genre,
-.book-year {
-  margin: 0;
-  font-size: 0.95em;
-  color: #333333;
-  line-height: 1.4;
+.input-group label {
+  font-weight: bold;
+  font-size: 0.9em;
+  min-width: 70px;
 }
 
-.book-author strong,
-.book-genre strong,
-.book-year strong,
-.book-id strong {
+.input-field {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid #000000; 
+  background: transparent;
   color: #000000;
-  font-weight: 700;
+  padding: 5px;
+  outline: none; 
 }
 
-.loading,
-.error,
-.no-books {
-  text-align: center;
-  padding: 40px 20px;
-  font-size: 1.1em;
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.btn {
+  padding: 10px 25px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.8em;
+  border: 1px solid #000000;
+  text-transform: uppercase;
+  background-color: #ffffff;
   color: #000000;
 }
 
-.error {
-  color: #cc0000;
-  background-color: #ffebee;
-  border: 1px solid #cc0000;
-  border-radius: 4px;
-  margin: 20px auto;
-  max-width: 600px;
+.btn:hover {
+  background-color: #000000;
+  color: #ffffff;
 }
 
-.loading {
-  font-weight: 600;
-}
-
-@media (max-width: 768px) {
-  .header h1 {
-    font-size: 2em;
+@media (max-width: 900px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
   }
-
-  .books-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
-  }
-
-  .book-title {
-    font-size: 1.1em;
+  .controls-section {
+    position: static;
+    width: 100%;
   }
 }
