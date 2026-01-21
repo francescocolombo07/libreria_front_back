@@ -13,6 +13,8 @@ function App() {
     anno: ''
   })
 
+  const [deleteId, setDeleteId] = useState('')
+
   const fetchLibri = async () => {
     setLoading(true)
     try {
@@ -55,6 +57,33 @@ function App() {
     }
   }
 
+  const handleDeleteBook = async () => {
+    if (!deleteId) return
+    try {
+      const response = await fetch(`http://localhost:11000/api/libri/${deleteId}`, {
+        method: 'DELETE'
+      })
+      if (response.ok) {
+        setDeleteId('')
+        fetchLibri()
+      }
+    } catch (err) {
+      alert("Errore nella cancellazione")
+    }
+  }
+
+  const handleDeleteAll = async () => {
+    if (!confirm("Eliminare tutto?")) return
+    try {
+      const response = await fetch('http://localhost:11000/api/libri', {
+        method: 'DELETE'
+      })
+      if (response.ok) fetchLibri()
+    } catch (err) {
+      alert("Errore")
+    }
+  }
+
   return (
     <div className="container">
       <header className="header">
@@ -63,8 +92,6 @@ function App() {
 
       <div className="main-layout">
         <div className="books-section">
-          {loading && <p>Caricamento...</p>}
-          {error && <p style={{ color: 'red' }}>{error}</p>}
           <div className="books-grid">
             {libri.map((libro) => (
               <div key={libro.id} className="book-card">
@@ -88,11 +115,11 @@ function App() {
             <form onSubmit={handleAddBook} className="control-form">
               <div className="input-group">
                 <label>Titolo:</label>
-                <input type="text" name="titolo" value={formData.titolo} onChange={handleInputChange} className="input-field" required />
+                <input type="text" name="titolo" value={formData.titolo} onChange={handleInputChange} className="input-field" />
               </div>
               <div className="input-group">
                 <label>Autore:</label>
-                <input type="text" name="autore" value={formData.autore} onChange={handleInputChange} className="input-field" required />
+                <input type="text" name="autore" value={formData.autore} onChange={handleInputChange} className="input-field" />
               </div>
               <div className="input-group">
                 <label>Genere:</label>
@@ -100,13 +127,28 @@ function App() {
               </div>
               <div className="input-group">
                 <label>Anno:</label>
-                <input type="number" name="anno" value={formData.anno} onChange={handleInputChange} className="input-field no-spinner" />
+                <input type="number" name="anno" value={formData.anno} onChange={handleInputChange} className="input-field" />
               </div>
               <div className="button-container">
-                <button type="submit" className="btn">AGGIUNGI LIBRO</button>
+                <button type="submit" className="btn btn-white">AGGIUNGI LIBRO</button>
               </div>
             </form>
           </div>
+
+          <div className="control-card">
+            <h3>RIMUOVI LIBRO</h3>
+            <div className="control-form">
+              <div className="input-group">
+                <label>ID:</label>
+                <input type="number" value={deleteId} onChange={(e) => setDeleteId(e.target.value)} className="input-field" />
+              </div>
+              <div className="button-container">
+                <button onClick={handleDeleteBook} className="btn btn-white">RIMUOVI</button>
+              </div>
+            </div>
+          </div>
+
+          <button onClick={handleDeleteAll} className="btn btn-white full-width">ELIMINA TUTTI I LIBRI</button>
         </div>
       </div>
     </div>

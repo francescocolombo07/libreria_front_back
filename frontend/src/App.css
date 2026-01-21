@@ -5,6 +5,7 @@ html, body {
   min-height: 100vh;
   background-color: #ffffff;
   font-family: sans-serif;
+  /* Assicura che il contenuto sia centrato nel body */
   display: flex;
   justify-content: center;
 }
@@ -13,20 +14,12 @@ html, body {
   box-sizing: border-box;
 }
 
-/* Rimuove le freccette per Chrome, Safari, Edge e Opera */
-.no-spinner::-webkit-outer-spin-button,
-.no-spinner::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
 
-/* Rimuove le freccette per Firefox */
-.no-spinner {
-  -moz-appearance: textfield;
-}
+
 
 .container {
   width: 100%;
+  /* Limitiamo la larghezza massima per evitare che si "allarghi" troppo su schermi giganti */
   max-width: 1200px; 
   min-height: 100vh;
   padding: 40px 20px;
@@ -53,6 +46,7 @@ html, body {
   margin: 0 auto;
 }
 
+/* Bilanciamento: ora le due sezioni sono uguali (1:1) */
 .books-section {
   flex: 1;
 }
@@ -62,6 +56,7 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 25px;
+  position: -webkit-sticky;
   position: sticky;
   top: 40px; 
 }
@@ -131,6 +126,11 @@ html, body {
   outline: none; 
 }
 
+input:focus, button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 .button-container {
   display: flex;
   justify-content: center;
@@ -147,11 +147,18 @@ html, body {
   text-transform: uppercase;
   background-color: #ffffff;
   color: #000000;
+  transition: none;
 }
 
-.btn:hover {
-  background-color: #000000;
-  color: #ffffff;
+.btn:hover, .btn:active, .btn:focus {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #000000 !important;
+  outline: none !important;
+}
+
+.full-width {
+  width: 100%;
 }
 
 @media (max-width: 900px) {
