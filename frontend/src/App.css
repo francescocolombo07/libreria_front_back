@@ -1,11 +1,10 @@
-html, body {
+vhtml, body {
   margin: 0;
   padding: 0;
   width: 100%;
   min-height: 100vh;
   background-color: #ffffff;
   font-family: sans-serif;
-  /* Assicura che il contenuto sia centrato nel body */
   display: flex;
   justify-content: center;
 }
@@ -14,64 +13,30 @@ html, body {
   box-sizing: border-box;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Rimuove le freccette per Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
-
-
-
-
-
-
 .container {
   width: 100%;
-  /* Limitiamo la larghezza massima per evitare che si "allarghi" troppo su schermi giganti */
-  max-width: 1200px; 
-  min-height: 100vh;
+  max-width: 1100px; 
   padding: 40px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .header {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   border-bottom: 2px solid #000000;
-  width: 100%;
-  max-width: 1100px;
   padding-bottom: 20px;
 }
 
 .main-layout {
   display: flex;
-  width: 100%;
-  max-width: 1100px; 
   gap: 50px;
   align-items: flex-start;
-  margin: 0 auto;
+  justify-content: center;
 }
 
-/* Bilanciamento: ora le due sezioni sono uguali (1:1) */
 .books-section {
-  flex: 1;
-}
-
-.controls-section {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 40px; 
+  align-items: center;
 }
 
 .books-grid {
@@ -80,9 +45,12 @@ input[type=number] {
   gap: 20px;
 }
 
+/* MISURA FISSATA IN PIXEL */
 .book-card {
   border: 1px solid #000000;
   background-color: #ffffff;
+  width: 400px;      /* Larghezza fissa */
+  max-width: 400px;  /* Sicurezza per schermi piccoli */
 }
 
 .book-card-header {
@@ -95,11 +63,27 @@ input[type=number] {
   margin: 0;
   font-size: 1.1em;
   text-transform: uppercase;
+  /* Tronca il titolo se supera i 400px */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .book-card-body {
   padding: 15px;
-  font-size: 0.9em;
+  font-size: 14px;
+  /* Gestione testi lunghi all'interno del corpo */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.controls-section {
+  width: 350px; /* Larghezza fissa anche per la colonna controlli */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 20px;
 }
 
 .control-card {
@@ -110,8 +94,8 @@ input[type=number] {
 
 .control-card h3 {
   margin-top: 0;
-  font-size: 1em;
-  margin-bottom: 20px;
+  font-size: 13px;
+  margin-bottom: 15px;
   text-decoration: underline;
   text-align: center;
 }
@@ -125,62 +109,55 @@ input[type=number] {
 
 .input-group label {
   font-weight: bold;
-  font-size: 0.9em;
-  min-width: 70px;
+  font-size: 13px;
+  min-width: 65px;
 }
 
+/* FONT 16PX PER EVITARE RIMPICCIOLIMENTO/ZOOM */
 .input-field {
   flex: 1;
   border: none;
   border-bottom: 1px solid #000000; 
   background: transparent;
   color: #000000;
-  padding: 5px;
-  outline: none; 
-}
-
-input:focus, button:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-.button-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: 15px;
+  padding: 8px 4px;
+  font-size: 16px; 
+  outline: none;
 }
 
 .btn {
-  padding: 10px 25px;
+  padding: 10px 20px;
   cursor: pointer;
   font-weight: bold;
-  font-size: 0.8em;
+  font-size: 13px;
   border: 1px solid #000000;
   text-transform: uppercase;
   background-color: #ffffff;
   color: #000000;
-  transition: none;
 }
 
-.btn:hover, .btn:active, .btn:focus {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-  border: 1px solid #000000 !important;
-  outline: none !important;
+.btn:hover {
+  background-color: #000000;
+  color: #ffffff;
 }
 
 .full-width {
   width: 100%;
 }
 
+.no-results {
+  text-align: center;
+  color: #000;
+  font-weight: bold;
+}
+
 @media (max-width: 900px) {
   .main-layout {
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: center;
   }
-  .controls-section {
-    position: static;
+  .book-card, .controls-section {
     width: 100%;
+    max-width: 400px;
   }
 }

@@ -13,6 +13,11 @@ function App() {
     anno: ''
   })
 
+  const [filtri, setFiltri] = useState({
+    autore: '',
+    genere: ''
+  })
+
   const [deleteId, setDeleteId] = useState('')
 
   const fetchLibri = async () => {
@@ -73,7 +78,7 @@ function App() {
   }
 
   const handleDeleteAll = async () => {
-    if (!confirm("Eliminare tutto?")) return
+    if (!confirm("Sei sicuro di voler eliminare tutti i libri?")) return
     try {
       const response = await fetch('http://localhost:11000/api/libri', {
         method: 'DELETE'
@@ -84,6 +89,11 @@ function App() {
     }
   }
 
+  const libriFiltrati = libri.filter(libro => {
+    return (libro.autore?.toLowerCase() || "").includes(filtri.autore.toLowerCase()) &&
+           (libro.genere?.toLowerCase() || "").includes(filtri.genere.toLowerCase())
+  })
+
   return (
     <div className="container">
       <header className="header">
@@ -93,33 +103,66 @@ function App() {
       <div className="main-layout">
         <div className="books-section">
           <div className="books-grid">
-            {libri.map((libro) => (
-              <div key={libro.id} className="book-card">
-                <div className="book-card-header">
-                  <h2 className="book-title">{libro.titolo}</h2>
+            {libriFiltrati.length > 0 ? (
+              libriFiltrati.map((libro) => (
+                <div key={libro.id} className="book-card">
+                  <div className="book-card-header">
+                    <h2 className="book-title" title={libro.titolo}>{libro.titolo}</h2>
+                  </div>
+                  <div className="book-card-body">
+                    <p><strong>ID:</strong> {libro.id}</p>
+                    <p><strong>Autore:</strong> {libro.autore}</p>
+                    <p><strong>Genere:</strong> {libro.genere}</p>
+                    <p><strong>Anno:</strong> {libro.anno}</p>
+                  </div>
                 </div>
-                <div className="book-card-body">
-                  <p><strong>ID:</strong> {libro.id}</p>
-                  <p><strong>Autore:</strong> {libro.autore}</p>
-                  <p><strong>Genere:</strong> {libro.genere}</p>
-                  <p><strong>Anno:</strong> {libro.anno}</p>
-                </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="no-results">Nessun libro trovato.</p>
+            )}
           </div>
         </div>
 
         <div className="controls-section">
           <div className="control-card">
-            <h3>AGGIUNGI NUOVO LIBRO</h3>
+            <h3>FILTRA LIBRI</h3>
+            <div className="control-form">
+              <div className="input-group">
+                <label>Autore:</label>
+                <input 
+                  type="text" 
+                  value={filtri.autore} 
+                  onChange={(e) => setFiltri({...filtri, autore: e.target.value})} 
+                  className="input-field" 
+                />
+              </div>
+              <div className="input-group">
+                <label>Genere:</label>
+                <input 
+                  type="text" 
+                  value={filtri.genere} 
+                  onChange={(e) => setFiltri({...filtri, genere: e.target.value})} 
+                  className="input-field" 
+                />
+              </div>
+              <div className="button-container">
+                <button className="btn" onClick={() => setFiltri({autore: '', genere: ''})}>
+                  RIMUOVI FILTRI
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="control-card">
+            <h3>AGGIUNGI LIBRO</h3>
             <form onSubmit={handleAddBook} className="control-form">
               <div className="input-group">
                 <label>Titolo:</label>
-                <input type="text" name="titolo" value={formData.titolo} onChange={handleInputChange} className="input-field" />
+                <input type="text" name="titolo" value={formData.titolo} onChange={handleInputChange} className="input-field" required />
               </div>
               <div className="input-group">
                 <label>Autore:</label>
-                <input type="text" name="autore" value={formData.autore} onChange={handleInputChange} className="input-field" />
+                <input type="text" name="autore" value={formData.autore} onChange={handleInputChange} className="input-field" required />
               </div>
               <div className="input-group">
                 <label>Genere:</label>
@@ -130,7 +173,7 @@ function App() {
                 <input type="number" name="anno" value={formData.anno} onChange={handleInputChange} className="input-field" />
               </div>
               <div className="button-container">
-                <button type="submit" className="btn btn-white">AGGIUNGI LIBRO</button>
+                <button type="submit" className="btn">AGGIUNGI</button>
               </div>
             </form>
           </div>
@@ -143,12 +186,12 @@ function App() {
                 <input type="number" value={deleteId} onChange={(e) => setDeleteId(e.target.value)} className="input-field" />
               </div>
               <div className="button-container">
-                <button onClick={handleDeleteBook} className="btn btn-white">RIMUOVI</button>
+                <button onClick={handleDeleteBook} className="btn">RIMUOVI</button>
               </div>
             </div>
           </div>
 
-          <button onClick={handleDeleteAll} className="btn btn-white full-width">ELIMINA TUTTI I LIBRI</button>
+          <button onClick={handleDeleteAll} className="btn full-width">ELIMINA TUTTO</button>
         </div>
       </div>
     </div>
