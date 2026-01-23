@@ -162,6 +162,46 @@ input[type=number] {
   font-weight: bold;
 }
 
+
+.book-card-body {
+  padding: 15px;
+  font-size: 14px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-card-body p {
+  margin: 5px 0;
+}
+
+/* STILE PER IL BOTTONE ELIMINA NELLA CARD */
+.btn-delete {
+  margin-top: 15px;
+  align-self: flex-end;
+  font-size: 11px;
+  padding: 5px 10px;
+  border-color: #ff0000;
+  color: #ff0000;
+}
+
+.btn-delete:hover {
+  background-color: #ff0000;
+  color: #ffffff;
+}
+
+/* STILE PER IL BOTTONE PERICOLOSO */
+.btn-danger {
+  border-color: #ff0000;
+  color: #ff0000;
+}
+
+.btn-danger:hover {
+  background-color: #ff0000;
+  color: #ffffff;
+}
+
 @media (max-width: 900px) {
   .main-layout {
     flex-direction: column-reverse;

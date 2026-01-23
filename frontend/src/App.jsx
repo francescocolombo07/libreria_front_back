@@ -18,8 +18,6 @@ function App() {
     genere: ''
   })
 
-  const [deleteId, setDeleteId] = useState('')
-
   const fetchLibri = async () => {
     setLoading(true)
     try {
@@ -62,14 +60,14 @@ function App() {
     }
   }
 
-  const handleDeleteBook = async () => {
-    if (!deleteId) return
+  // Questa funzione ora accetta l'ID direttamente come parametro
+  const handleDeleteBook = async (id) => {
+    if (!confirm(`Sei sicuro di voler eliminare il libro con ID ${id}?`)) return
     try {
-      const response = await fetch(`http://localhost:11000/api/libri/${deleteId}`, {
+      const response = await fetch(`http://localhost:11000/api/libri/${id}`, {
         method: 'DELETE'
       })
       if (response.ok) {
-        setDeleteId('')
         fetchLibri()
       }
     } catch (err) {
@@ -114,6 +112,13 @@ function App() {
                     <p><strong>Autore:</strong> {libro.autore}</p>
                     <p><strong>Genere:</strong> {libro.genere}</p>
                     <p><strong>Anno:</strong> {libro.anno}</p>
+                    {/* NUOVO BOTTONE ELIMINA SULLA CARD */}
+                    <button 
+                      className="btn btn-delete" 
+                      onClick={() => handleDeleteBook(libro.id)}
+                    >
+                      ELIMINA
+                    </button>
                   </div>
                 </div>
               ))
@@ -146,7 +151,7 @@ function App() {
                 />
               </div>
               <div className="button-container">
-                <button className="btn" onClick={() => setFiltri({autore: '', genere: ''})}>
+                <button className="btn full-width" onClick={() => setFiltri({autore: '', genere: ''})}>
                   RIMUOVI FILTRI
                 </button>
               </div>
@@ -173,25 +178,12 @@ function App() {
                 <input type="number" name="anno" value={formData.anno} onChange={handleInputChange} className="input-field" />
               </div>
               <div className="button-container">
-                <button type="submit" className="btn">AGGIUNGI</button>
+                <button type="submit" className="btn full-width">AGGIUNGI</button>
               </div>
             </form>
           </div>
 
-          <div className="control-card">
-            <h3>RIMUOVI LIBRO</h3>
-            <div className="control-form">
-              <div className="input-group">
-                <label>ID:</label>
-                <input type="number" value={deleteId} onChange={(e) => setDeleteId(e.target.value)} className="input-field" />
-              </div>
-              <div className="button-container">
-                <button onClick={handleDeleteBook} className="btn">RIMUOVI</button>
-              </div>
-            </div>
-          </div>
-
-          <button onClick={handleDeleteAll} className="btn full-width">ELIMINA TUTTO</button>
+          <button onClick={handleDeleteAll} className="btn full-width btn-danger">ELIMINA TUTTO</button>
         </div>
       </div>
     </div>
