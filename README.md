@@ -23,6 +23,30 @@ libreria_front_back/
 - **Backend**: Python 3.12+
 - **Frontend**: Node.js e npm
 
+## 📋 Requisiti Funzionali
+-Il sistema deve generare automaticamente 20 libri usando la libreria faker
+-L'utente deve poter visualizzare l'elenco completo dei libri presenti nella libreria.
+-L'utente deve poter aggiungere un nuovo libro tramite un form, inserendo titolo, autore, anno e genere.
+-L'utente deve poter eliminare un libro inserendo il suo ID.
+-L'utente deve poter eliminare tutta la libreria con un bottone.
+-L'utente deve poter filtrare i libri per autore o per genere dall'interfaccia. 
+
+## 📋 Requisiti Non funzionali
+-Il sistema deve essere separato in frontend e backend
+-Il sistema deve essere separato in frontend e backend
+-Il backend deve essere sviluppato in Python utilizzando flask. 
+-Il frontend deve essere sviluppata con React
+-La comunicazione dei dati deve essere fatta tramite API REST in formato JSON.
+-Il codice deve essere gestito e versionato tramite GitHub. 
+
+## 📋 User Story
+-Come utente, voglio poter visualizzare l'elenco completo dei libri presenti, così da poter consultare l'intero catalogo della libreria.
+-Come utente, voglio poter filtrare i libri per autore o per genere, così da trovare rapidamente i libri che mi interessano.
+-Come utente, voglio poter aggiungere un nuovo libro alla libreria, così da aggiornare la libreria con nuovi arrivi.
+-Come utente, voglio poter eliminare un determinato libro, così da rimuovere i libri non più disponibili.
+-Come utente, voglio poter eliminare l'intera libreria premendo un unico tasto, così da eliminare tutti i libri in caso di necessità.
+
+
 ## 🔧 Installazione e Avvio
 
 ### Backend
